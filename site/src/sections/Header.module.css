@@ -11,6 +11,10 @@
     background-color var(--dur-base) var(--ease-standard),
     border-color var(--dur-base) var(--ease-standard);
 }
+.scrolled {
+  background: var(--surface-dark);
+  border-bottom-color: var(--border-on-dark);
+}
 .solid {
   background: rgba(255, 255, 255, 0.92);
   -webkit-backdrop-filter: blur(8px);

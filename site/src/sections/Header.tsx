@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'motion/react'
+import { useCallback, useEffect, useState, type MouseEvent } from 'react'
+import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll } from 'motion/react'
 import { Menu, X } from 'lucide-react'
 import { Button } from '../components/Button'
 import { Logo } from '../components/Logo'
@@ -11,12 +11,17 @@ import s from './Header.module.css'
 /** Transparente sobre o hero escuro; vira branco 92% + blur 8px ao rolar. */
 export function Header() {
   const [solid, setSolid] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const reduce = useReducedMotion()
   const { scrollY, scrollYProgress } = useScroll()
 
+  /* Três estados: transparente no topo; grafite enquanto o hero rola por baixo
+     (no celular o hero é alto); branco com blur depois do hero. */
   useMotionValueEvent(scrollY, 'change', (y) => {
     const heroEl = document.getElementById('hero')
     const limit = heroEl ? heroEl.offsetHeight - 78 : 480
+    setScrolled(y > 8)
     setSolid(y > limit)
   })
 
@@ -35,14 +40,30 @@ export function Header() {
     }
   }, [open])
 
+  /* No menu mobile o body está travado (overflow hidden), então o salto de âncora nativo
+     não rola a página. Fecha o menu, libera o scroll e rola por conta própria. */
+  const goTo = useCallback(
+    (href: string) => (e: MouseEvent<HTMLElement>) => {
+      e.preventDefault()
+      setOpen(false)
+      document.body.style.overflow = ''
+      const target = document.querySelector<HTMLElement>(href)
+      requestAnimationFrame(() => {
+        target?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
+        history.replaceState(null, '', href)
+      })
+    },
+    [reduce],
+  )
+
   const onDark = !solid && !open
 
   return (
     <>
-      <header className={cx(s.header, solid && s.solid, open && s.open)}>
+      <header className={cx(s.header, scrolled && !solid && s.scrolled, solid && s.solid, open && s.open)}>
         <motion.div className={s.progress} style={{ scaleX: scrollYProgress }} aria-hidden="true" />
         <div className={cx('wrap', s.bar)}>
-          <a href="#top" className={s.logoLink} aria-label="EFFICAX, voltar ao início" onClick={() => setOpen(false)}>
+          <a href="#top" className={s.logoLink} aria-label="EFFICAX, voltar ao início" onClick={goTo('#top')}>
             <Logo variant={onDark ? 'onDark' : 'primary'} height={30} />
           </a>
 
@@ -93,13 +114,13 @@ export function Header() {
                   href={item.href}
                   className={s.overlayLink}
                   variants={reveal}
-                  onClick={() => setOpen(false)}
+                  onClick={goTo(item.href)}
                 >
                   {item.label}
                 </motion.a>
               ))}
               <motion.div variants={reveal} className={s.overlayCta}>
-                <Button href="#contato" size="lg" variant="onDark" onClick={() => setOpen(false)}>
+                <Button href="#contato" size="lg" variant="onDark" onClick={goTo('#contato')}>
                   {hero.primary}
                 </Button>
               </motion.div>

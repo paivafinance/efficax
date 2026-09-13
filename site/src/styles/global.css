@@ -27,6 +27,12 @@ html {
 
 body {
   overflow-x: clip;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a,
+button {
+  touch-action: manipulation;
 }
 
 .wrap {

@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { MouseEvent, ReactNode } from 'react'
 import { cx } from '../lib/cx'
 import s from './Button.module.css'
 
@@ -17,7 +17,7 @@ type Props = {
   href?: string
   target?: string
   rel?: string
-  onClick?: () => void
+  onClick?: (e: MouseEvent<HTMLElement>) => void
   iconLeft?: ReactNode
   iconRight?: ReactNode
   className?: string

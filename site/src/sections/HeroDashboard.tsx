@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from 'motion/react'
+import { useRef } from 'react'
+import { motion, useInView, useReducedMotion } from 'motion/react'
 import { useCountUp } from '../hooks/useCountUp'
 import { dashboard } from '../content/site'
 import { brlMil, pct } from '../lib/format'
@@ -16,8 +17,13 @@ const SERIES = {
   mix: ['var(--green-500)', 'var(--green-300)', 'var(--graphite-300)', 'var(--graphite-500)'],
 }
 
-function Kpi({ label, valueMil, signed, delay }: { label: string; valueMil: number; signed: boolean; delay: number }) {
-  const v = useCountUp(valueMil, { delay, duration: 1.4 })
+/* Só anima quando o painel está na tela (no celular ele fica abaixo da dobra).
+   `reduce` entrega o estado final sem animação; `play` libera a coreografia. */
+type Ctl = { startAt: number; reduce: boolean; play: boolean }
+const go = <T,>(ctl: Ctl, v: T): T | undefined => (ctl.reduce || ctl.play ? v : undefined)
+
+function Kpi({ label, valueMil, signed, delay, ctl }: { label: string; valueMil: number; signed: boolean; delay: number; ctl: Ctl }) {
+  const v = useCountUp(valueMil, { delay, duration: 1.4, active: ctl.reduce || ctl.play })
   return (
     <div className={s.kpi}>
       <span className={s.kpiLabel}>{label}</span>
@@ -26,7 +32,7 @@ function Kpi({ label, valueMil, signed, delay }: { label: string; valueMil: numb
   )
 }
 
-function Bars({ startAt, reduce }: { startAt: number; reduce: boolean }) {
+function Bars({ ctl }: { ctl: Ctl }) {
   const { inflow, outflow, months } = dashboard.cashflow
   const W = 240
   const H = 84
@@ -43,7 +49,7 @@ function Bars({ startAt, reduce }: { startAt: number; reduce: boolean }) {
           const x0 = i * group + group / 2 - bw - 1.5
           const hi = scale(v)
           const ho = scale(outflow[i])
-          const t = (k: number) => ({ duration: 0.7, ease: easeOut, delay: startAt + i * 0.06 + k * 0.05 })
+          const t = (k: number) => ({ duration: 0.7, ease: easeOut, delay: ctl.startAt + i * 0.06 + k * 0.05 })
           return (
             <g key={i}>
               <motion.rect
@@ -51,8 +57,8 @@ function Bars({ startAt, reduce }: { startAt: number; reduce: boolean }) {
                 width={bw}
                 rx="1"
                 fill={SERIES.inflow}
-                initial={reduce ? false : { height: 0, y: base }}
-                animate={{ height: hi, y: base - hi }}
+                initial={ctl.reduce ? false : { height: 0, y: base }}
+                animate={go(ctl, { height: hi, y: base - hi })}
                 transition={t(0)}
               />
               <motion.rect
@@ -60,8 +66,8 @@ function Bars({ startAt, reduce }: { startAt: number; reduce: boolean }) {
                 width={bw}
                 rx="1"
                 fill={SERIES.outflow}
-                initial={reduce ? false : { height: 0, y: base }}
-                animate={{ height: ho, y: base - ho }}
+                initial={ctl.reduce ? false : { height: 0, y: base }}
+                animate={go(ctl, { height: ho, y: base - ho })}
                 transition={t(1)}
               />
             </g>
@@ -85,7 +91,7 @@ function Bars({ startAt, reduce }: { startAt: number; reduce: boolean }) {
   )
 }
 
-function Donut({ startAt, reduce }: { startAt: number; reduce: boolean }) {
+function Donut({ ctl }: { ctl: Ctl }) {
   const items = dashboard.outflowMix.items
   let acc = 0
   const segs = items.map((it, i) => {
@@ -109,9 +115,9 @@ function Donut({ startAt, reduce }: { startAt: number; reduce: boolean }) {
                 fill="none"
                 stroke={seg.color}
                 strokeWidth="11"
-                initial={reduce ? false : { pathLength: 0, pathOffset: seg.start, pathSpacing: 1 }}
-                animate={{ pathLength: seg.len, pathOffset: seg.start, pathSpacing: 1 }}
-                transition={{ duration: 0.9, ease: easeOut, delay: startAt + i * 0.12 }}
+                initial={ctl.reduce ? false : { pathLength: 0, pathOffset: seg.start, pathSpacing: 1 }}
+                animate={go(ctl, { pathLength: seg.len, pathOffset: seg.start, pathSpacing: 1 })}
+                transition={{ duration: 0.9, ease: easeOut, delay: ctl.startAt + i * 0.12 }}
               />
             ))}
           </g>
@@ -125,9 +131,9 @@ function Donut({ startAt, reduce }: { startAt: number; reduce: boolean }) {
         {items.map((it, i) => (
           <motion.li
             key={it.label}
-            initial={reduce ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.42, delay: startAt + 0.2 + i * 0.1 }}
+            initial={ctl.reduce ? false : { opacity: 0 }}
+            animate={go(ctl, { opacity: 1 })}
+            transition={{ duration: 0.42, delay: ctl.startAt + 0.2 + i * 0.1 }}
           >
             <i style={{ background: SERIES.mix[i] }} />
             <span>{it.label}</span>
@@ -139,7 +145,7 @@ function Donut({ startAt, reduce }: { startAt: number; reduce: boolean }) {
   )
 }
 
-function Line({ startAt, reduce }: { startAt: number; reduce: boolean }) {
+function Line({ ctl }: { ctl: Ctl }) {
   const series = dashboard.balance.series
   const W = 300
   const H = 80
@@ -165,24 +171,24 @@ function Line({ startAt, reduce }: { startAt: number; reduce: boolean }) {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          initial={reduce ? false : { pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 1.5, ease: easeOut, delay: startAt }}
+          initial={ctl.reduce ? false : { pathLength: 0 }}
+          animate={go(ctl, { pathLength: 1 })}
+          transition={{ duration: 1.5, ease: easeOut, delay: ctl.startAt }}
         />
         <motion.circle
           cx={ex}
           cy={ey}
           fill={SERIES.line}
-          initial={reduce ? false : { r: 0 }}
-          animate={{ r: 3.5 }}
-          transition={{ duration: 0.3, ease: easeOut, delay: startAt + 1.4 }}
+          initial={ctl.reduce ? false : { r: 0 }}
+          animate={go(ctl, { r: 3.5 })}
+          transition={{ duration: 0.3, ease: easeOut, delay: ctl.startAt + 1.4 }}
         />
       </svg>
       <motion.span
         className={cx('num', s.lineTag)}
-        initial={reduce ? false : { opacity: 0, y: 4 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.42, ease: easeOut, delay: startAt + 1.5 }}
+        initial={ctl.reduce ? false : { opacity: 0, y: 4 }}
+        animate={go(ctl, { opacity: 1, y: 0 })}
+        transition={{ duration: 0.42, ease: easeOut, delay: ctl.startAt + 1.5 }}
       >
         {brlMil(series[series.length - 1], { signed: true })}
       </motion.span>
@@ -190,12 +196,20 @@ function Line({ startAt, reduce }: { startAt: number; reduce: boolean }) {
   )
 }
 
-/** Painel "Resultado do mês": gráficos que se desenham na abertura. Exemplo ilustrativo. */
+/** Painel "Resultado do mês": gráficos que se desenham quando o painel entra na tela. Exemplo ilustrativo. */
 export function HeroDashboard({ startAt = 0.8 }: Props) {
+  const ref = useRef<HTMLDivElement>(null)
   const reduce = useReducedMotion() ?? false
+  const play = useInView(ref, { once: true, amount: 0.35 })
   const t0 = reduce ? 0 : startAt
+  const ctl: Ctl = { startAt: t0, reduce, play }
   return (
-    <div className={s.card} role="img" aria-label="Painel ilustrativo de resultado do mês, com fluxo de caixa, composição das saídas e evolução do saldo">
+    <div
+      ref={ref}
+      className={s.card}
+      role="img"
+      aria-label="Painel ilustrativo de resultado do mês, com fluxo de caixa, composição das saídas e evolução do saldo"
+    >
       <div className={s.head}>
         <span className={s.title}>{dashboard.title}</span>
         <span className={s.badge}>{dashboard.badge}</span>
@@ -203,24 +217,24 @@ export function HeroDashboard({ startAt = 0.8 }: Props) {
 
       <div className={s.kpis}>
         {dashboard.kpis.map((k, i) => (
-          <Kpi key={k.label} {...k} delay={t0 + i * 0.1} />
+          <Kpi key={k.label} {...k} delay={t0 + i * 0.1} ctl={ctl} />
         ))}
       </div>
 
       <div className={s.row}>
         <div className={s.panel}>
           <span className={s.panelLabel}>{dashboard.cashflow.label}</span>
-          <Bars startAt={t0 + 0.2} reduce={reduce} />
+          <Bars ctl={{ ...ctl, startAt: t0 + 0.2 }} />
         </div>
         <div className={s.panel}>
           <span className={s.panelLabel}>{dashboard.outflowMix.label}</span>
-          <Donut startAt={t0 + 0.4} reduce={reduce} />
+          <Donut ctl={{ ...ctl, startAt: t0 + 0.4 }} />
         </div>
       </div>
 
       <div className={s.panel}>
         <span className={s.panelLabel}>{dashboard.balance.label}</span>
-        <Line startAt={t0 + 0.6} reduce={reduce} />
+        <Line ctl={{ ...ctl, startAt: t0 + 0.6 }} />
       </div>
 
       <div className={s.caption}>{dashboard.caption}</div>
