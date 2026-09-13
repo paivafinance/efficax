@@ -1,3 +1,4 @@
-# Caminho do site antigo continua funcionando
-/Efficax_Landing /   301
-/Efficax_Landing/* / 301
+# Caminhos do site antigo continuam funcionando
+/Efficax_Landing        / 301
+/Efficax_Landing.html   / 301
+/Efficax_Landing/*      / 301
