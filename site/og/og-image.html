@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>OG image · EFFICAX</title>
+    <!-- Template da imagem Open Graph (1200×630). Renderizado com Playwright e salvo em public/og-image.jpg.
+         Não é publicado: fica fora de public/. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500&family=Archivo:wght@400;500;600&family=Jost:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=block"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --green-400: #9ecb2b;
+        --green-500: #85b803;
+        --green-300: #b6db5c;
+        --g-300: #b2b5b7;
+        --g-400: #8a8d90;
+        --g-500: #6d6e71;
+        --g-700: #434446;
+        --g-800: #2e3033;
+        --line: rgba(255, 255, 255, 0.18);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      html,
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        background: var(--g-800);
+        color: #fff;
+        font-family: 'Archivo', Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .canvas {
+        position: relative;
+        width: 1200px;
+        height: 630px;
+        padding: 64px 72px 56px;
+        display: grid;
+        grid-template-columns: 1fr 392px;
+        grid-template-rows: auto 1fr auto;
+        column-gap: 56px;
+      }
+      .head {
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .logo {
+        height: 44px;
+        width: auto;
+        filter: brightness(0) invert(1);
+        display: block;
+      }
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: 'Jost', sans-serif;
+        font-weight: 500;
+        font-size: 15px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--green-400);
+      }
+      .eyebrow::before {
+        content: '';
+        width: 28px;
+        height: 2px;
+        background: var(--green-400);
+      }
+      .copy {
+        align-self: center;
+        padding-top: 8px;
+      }
+      h1 {
+        font-family: 'Newsreader', Georgia, serif;
+        font-weight: 400;
+        font-size: 68px;
+        line-height: 1.04;
+        letter-spacing: -0.02em;
+        color: #fff;
+        max-width: 640px;
+      }
+      h1 .hl {
+        color: var(--green-400);
+      }
+      .lead {
+        margin-top: 26px;
+        font-size: 21px;
+        line-height: 1.5;
+        color: var(--g-300);
+        max-width: 560px;
+      }
+      .panel {
+        align-self: center;
+        background: var(--g-700);
+        border: 1px solid var(--line);
+        border-radius: 5px;
+        padding: 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .panel-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        font-size: 15px;
+      }
+      .badge {
+        font-family: 'Jost', sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--g-300);
+        border: 1px solid var(--line);
+        border-radius: 2px;
+        padding: 4px 7px;
+      }
+      .kpis {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .kpi {
+        border: 1px solid var(--line);
+        border-radius: 3px;
+        padding: 10px 10px;
+        min-width: 0;
+        overflow: hidden;
+      }
+      .kpi span {
+        display: block;
+        font-family: 'Jost', sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--g-300);
+        margin-bottom: 6px;
+      }
+      .kpi b {
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: 500;
+        font-size: 15px;
+        letter-spacing: -0.01em;
+        white-space: nowrap;
+      }
+      .kpi b.pos {
+        color: var(--green-400);
+      }
+      .chart {
+        border: 1px solid var(--line);
+        border-radius: 3px;
+        padding: 12px;
+      }
+      .chart-label {
+        font-family: 'Jost', sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--g-300);
+        margin-bottom: 8px;
+      }
+      .chart svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .tag {
+        position: absolute;
+        right: 10px;
+        top: 6px;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--green-400);
+        background: var(--g-700);
+        border: 1px solid var(--line);
+        border-radius: 2px;
+        padding: 2px 6px;
+      }
+      .rel {
+        position: relative;
+      }
+      .foot {
+        grid-column: 1 / -1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+        font-size: 15px;
+        color: var(--g-300);
+      }
+      .foot .domain {
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: 500;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="canvas">
+      <div class="head">
+        <img class="logo" src="/brand/logo-efficax-primary.png" alt="EFFICAX" />
+        <div class="eyebrow">Gestão financeira terceirizada · PMEs</div>
+      </div>
+
+      <div class="copy">
+        <h1>Muito além do caixa: <span class="hl">gestão financeira estratégica</span> para a sua empresa.</h1>
+        <p class="lead">A experiência de um CFO sênior à frente do seu financeiro: controladoria, FP&amp;A, tesouraria, captação e M&amp;A.</p>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <span>Resultado do mês</span>
+          <span class="badge">Exemplo ilustrativo</span>
+        </div>
+        <div class="kpis">
+          <div class="kpi"><span>Entradas</span><b>R$ 482 mil</b></div>
+          <div class="kpi"><span>Saídas</span><b>R$ 391 mil</b></div>
+          <div class="kpi"><span>Saldo</span><b class="pos">+R$ 91 mil</b></div>
+        </div>
+        <div class="chart">
+          <div class="chart-label">Fluxo de caixa · 6 meses</div>
+          <svg viewBox="0 0 320 70" aria-hidden="true">
+            <line x1="0" y1="64.5" x2="320" y2="64.5" stroke="rgba(255,255,255,.18)" />
+            <g fill="#85b803">
+              <rect x="18" y="20" width="14" height="44" rx="1" />
+              <rect x="70" y="14" width="14" height="50" rx="1" />
+              <rect x="122" y="17" width="14" height="47" rx="1" />
+              <rect x="174" y="12" width="14" height="52" rx="1" />
+              <rect x="226" y="13" width="14" height="51" rx="1" />
+              <rect x="278" y="11" width="14" height="53" rx="1" />
+            </g>
+            <g fill="#8a8d90">
+              <rect x="35" y="24" width="14" height="40" rx="1" />
+              <rect x="87" y="22" width="14" height="42" rx="1" />
+              <rect x="139" y="25" width="14" height="39" rx="1" />
+              <rect x="191" y="20" width="14" height="44" rx="1" />
+              <rect x="243" y="22" width="14" height="42" rx="1" />
+              <rect x="295" y="22" width="14" height="42" rx="1" />
+            </g>
+          </svg>
+        </div>
+        <div class="chart rel">
+          <div class="chart-label">Evolução do saldo · 12 meses</div>
+          <span class="tag">+R$ 91 mil</span>
+          <svg viewBox="0 0 320 64" aria-hidden="true">
+            <line x1="0" y1="12.5" x2="320" y2="12.5" stroke="rgba(255,255,255,.18)" />
+            <line x1="0" y1="34.5" x2="320" y2="34.5" stroke="rgba(255,255,255,.18)" />
+            <line x1="0" y1="56.5" x2="320" y2="56.5" stroke="rgba(255,255,255,.18)" />
+            <polyline
+              fill="none"
+              stroke="#9ecb2b"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              points="6,52 34,47 62,50 90,41 118,38 146,43 174,33 202,27 230,31 258,20 286,15 314,8"
+            />
+            <circle cx="314" cy="8" r="4" fill="#9ecb2b" />
+          </svg>
+        </div>
+      </div>
+
+      <div class="foot">
+        <span class="domain">efficaxassessoria.com.br</span>
+        <span>Um CFO sênior à frente do seu financeiro</span>
+      </div>
+    </div>
+  </body>
+</html>

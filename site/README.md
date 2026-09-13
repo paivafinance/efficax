@@ -42,6 +42,7 @@ Sem Git: `npm run build` e `npx wrangler deploy` com login na conta do domínio.
 | Componentes do DS (Button, Stat, SectionLabel, Logo, Section, Reveal) | `src/components/` |
 | Painel animado do hero (gráficos SVG) | `src/sections/HeroDashboard.tsx` |
 | Curvas e durações das animações | `src/lib/motion.ts` |
+| Imagem de preview (WhatsApp, LinkedIn, Google) | template em `og/og-image.html`; renderizar a 1200×630 e salvar como `public/og-image.jpg` (JPEG < 300 KB) |
 
 ## Decisões de design
 
