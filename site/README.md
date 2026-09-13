@@ -15,9 +15,21 @@ npm run typecheck  # tsc
 npm run build      # gera dist/ (saída estática, base relativa)
 ```
 
-## Publicar
+## Publicar (Cloudflare Pages)
 
-`npm run build` gera `dist/`. Como o `base` é relativo (`./`), a pasta funciona em qualquer caminho da hospedagem, inclusive o atual (`/Efficax_Landing/`). Basta copiar o conteúdo de `dist/` para a pasta pública. A URL precisa terminar com barra quando estiver em subpasta.
+Repositório: `github.com/paivafinance/efficax`. Projeto Pages conectado ao repo, na conta Cloudflare que tem o domínio `efficaxassessoria.com.br`.
+
+| Configuração | Valor |
+|---|---|
+| Production branch | `main` |
+| Root directory | `site` |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| Variável de ambiente | `NODE_VERSION` = `22` (o `.node-version` já pede 22; a variável é redundância) |
+
+`public/_redirects` manda `/Efficax_Landing` e `/Efficax_Landing/*` para `/` com 301, então links antigos continuam funcionando. Cada push em `main` publica em produção; outros branches geram preview.
+
+Sem Git: `npm run build` e `npx wrangler pages deploy dist --project-name=<projeto>` com login na conta do domínio.
 
 ## Onde mexer
 
