@@ -1,0 +1,12 @@
+{
+  // Worker de assets estáticos: mesmo nome do Worker que já serve efficaxassessoria.com.br,
+  // para que o build via Git substitua o site antigo sem mexer em DNS.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "efficax-assessoria",
+  "compatibility_date": "2026-08-01",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}
