@@ -1,0 +1,26 @@
+<!-- @dsCard group="Site institucional" viewport="1280x820" name="Site EFFICAX" subtitle="Home, servicos, casos e contato — navegacao clicavel" -->
+<!-- @startingPoint section="Site institucional" subtitle="Site institucional completo, 4 telas clicaveis" viewport="1280x820" -->
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>EFFICAX — Assessoria Financeira</title>
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{margin:0}.wrap{max-width:var(--container-max);margin:0 auto;padding:0 40px}</style>
+</head><body><div id="root"></div>
+<script type="text/babel" src="Chrome.jsx"></script>
+<script type="text/babel" src="Home.jsx"></script>
+<script type="text/babel" src="Services.jsx"></script>
+<script type="text/babel" src="Cases.jsx"></script>
+<script type="text/babel" src="Contact.jsx"></script>
+<script type="text/babel">
+const {SiteHeader,SiteFooter}=window;
+function Site(){
+  const [page,setPage]=React.useState('home');
+  React.useEffect(()=>{window.scrollTo(0,0)},[page]);
+  const Pages={home:window.HomePage,servicos:window.ServicesPage,casos:window.CasesPage,contato:window.ContactPage};
+  const Current=Pages[page];
+  return (<div><SiteHeader page={page} go={setPage}/><Current go={setPage}/><SiteFooter go={setPage}/></div>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Site/>);
+</script></body></html>

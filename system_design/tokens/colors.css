@@ -1,0 +1,26 @@
+:root{
+/* --- Marca: verde EFFICAX (amostrado do logo: #85B803) --- */
+--green-50:#f4f9e6;--green-100:#e6f2c4;--green-200:#d1e894;--green-300:#b6db5c;--green-400:#9ecb2b;
+--green-500:#85b803;--green-600:#6f9a03;--green-700:#587a05;--green-800:#435c08;--green-900:#2f400a;
+/* --- Grafite: cinza institucional (amostrado do logo: #595959 / #6d6e71) --- */
+--graphite-25:#fafafa;--graphite-50:#f4f5f5;--graphite-100:#e8e9ea;--graphite-200:#d4d6d7;--graphite-300:#b2b5b7;
+--graphite-400:#8a8d90;--graphite-500:#6d6e71;--graphite-600:#595959;--graphite-700:#434446;--graphite-800:#2e3033;--graphite-900:#1d1f21;
+/* --- Semanticas de estado --- */
+--positive-500:#2f8f4e;--positive-50:#eaf5ee;
+--attention-500:#c08a00;--attention-50:#fbf3de;
+--negative-500:#b23c2e;--negative-50:#f9ece9;
+--info-500:#2f6f8f;--info-50:#e9f2f6;
+/* --- Dados / graficos (serie ordenada, verde-a-grafite) --- */
+--chart-1:#85b803;--chart-2:#587a05;--chart-3:#6d6e71;--chart-4:#b6db5c;--chart-5:#2e3033;--chart-6:#d4d6d7;
+
+/* ===== Aliases semanticos (usar estes no codigo) ===== */
+--brand:var(--green-500);--brand-strong:var(--green-700);--brand-soft:var(--green-50);
+--text-strong:var(--graphite-900);--text-body:var(--graphite-700);--text-muted:var(--graphite-500);
+--text-subtle:var(--graphite-400);--text-on-brand:#ffffff;--text-on-dark:#ffffff;--text-brand:var(--green-700);
+--surface-page:#ffffff;--surface-subtle:var(--graphite-25);--surface-card:#ffffff;
+--surface-sunken:var(--graphite-50);--surface-dark:var(--graphite-800);--surface-brand:var(--green-500);
+--border-subtle:var(--graphite-100);--border-default:var(--graphite-200);--border-strong:var(--graphite-300);
+--border-brand:var(--green-500);--border-on-dark:rgba(255,255,255,.18);
+--focus-ring:var(--green-400);--overlay:rgba(29,31,33,.55);
+--rule-hairline:var(--graphite-200);
+}
