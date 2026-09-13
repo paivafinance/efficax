@@ -1,0 +1,58 @@
+.root {
+  text-align: left;
+}
+.value {
+  font-family: var(--font-mono);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-h1);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--graphite-900);
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+}
+.lg .value {
+  font-size: clamp(38px, 3.6vw, 48px);
+}
+.md .value {
+  font-size: var(--fs-h2);
+}
+.digits {
+  display: inline-block;
+  text-align: left;
+}
+.affix {
+  font-size: 0.5em;
+  letter-spacing: 0;
+  color: var(--text-muted);
+  margin: 0 5px 0 0;
+}
+.digits + .affix,
+.suffix + .affix {
+  margin: 0 0 0 6px;
+}
+.suffix {
+  font-size: 0.7em;
+}
+.label {
+  margin-top: var(--space-2);
+  font: var(--fw-regular) var(--fs-body-sm) / 1.45 var(--font-sans);
+  color: var(--text-muted);
+  max-width: 28ch;
+}
+
+.onDark .value {
+  color: #fff;
+}
+.onDark .affix {
+  color: var(--graphite-300);
+}
+.onDark .label {
+  color: var(--graphite-300);
+}
+
+.brand .value {
+  color: var(--green-700);
+}

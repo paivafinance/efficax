@@ -1,0 +1,26 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.rule {
+  width: 28px;
+  height: var(--border-width-accent);
+  background: var(--brand);
+  flex: none;
+}
+.text {
+  font: var(--type-eyebrow);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--green-700);
+}
+.muted .text {
+  color: var(--text-muted);
+}
+.onDark .rule {
+  background: var(--green-400);
+}
+.onDark .text {
+  color: var(--green-400);
+}

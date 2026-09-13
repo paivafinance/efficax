@@ -1,0 +1,102 @@
+.track {
+  position: relative;
+  padding-top: var(--space-5);
+}
+.rail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--border-width-rule);
+  background: var(--graphite-200);
+}
+.fill {
+  position: absolute;
+  inset: 0;
+  background: var(--brand);
+  transform-origin: left;
+}
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+.step {
+  position: relative;
+  padding-top: var(--space-2);
+}
+.node {
+  position: absolute;
+  top: calc(-1 * var(--space-5) - 5px);
+  left: 0;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--surface-subtle);
+  border: 2px solid var(--graphite-300);
+  transition:
+    background-color var(--dur-base) var(--ease-standard),
+    border-color var(--dur-base) var(--ease-standard);
+}
+.active .node {
+  background: var(--brand);
+  border-color: var(--brand);
+}
+.meta {
+  display: flex;
+  gap: 6px;
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-medium);
+  color: var(--text-subtle);
+  transition: color var(--dur-base) var(--ease-standard);
+}
+.verb {
+  font-weight: var(--fw-regular);
+}
+.active .meta {
+  color: var(--green-700);
+}
+.title {
+  margin-top: var(--space-3);
+  font-size: clamp(24px, 2.4vw, 29px);
+  color: var(--text-muted);
+  transition: color var(--dur-base) var(--ease-standard);
+}
+.active .title {
+  color: var(--text-strong);
+}
+.text {
+  margin-top: var(--space-2);
+  font: var(--fw-regular) var(--fs-body-sm) / 1.62 var(--font-sans);
+  color: var(--text-muted);
+  max-width: 34ch;
+}
+
+@media (max-width: 800px) {
+  .track {
+    padding-top: 0;
+    padding-left: var(--space-6);
+  }
+  .rail {
+    top: 0;
+    bottom: 0;
+    left: 5px;
+    right: auto;
+    width: var(--border-width-rule);
+    height: auto;
+  }
+  .fill {
+    transform-origin: top;
+  }
+  .steps {
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
+  .node {
+    top: 4px;
+    left: calc(-1 * var(--space-6) - 0px);
+  }
+}

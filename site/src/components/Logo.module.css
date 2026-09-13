@@ -1,0 +1,9 @@
+.img {
+  width: auto;
+  display: block;
+  transition: filter var(--dur-base) var(--ease-standard);
+  user-select: none;
+}
+.onDark {
+  filter: brightness(0) invert(1);
+}

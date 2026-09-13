@@ -1,0 +1,120 @@
+.btn {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+  border-radius: var(--radius-control);
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    var(--transition-control),
+    transform var(--dur-instant) var(--ease-standard);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+
+.sm {
+  font-size: var(--fs-body-sm);
+  padding: 7px 14px;
+}
+.md {
+  font-size: var(--fs-body-sm);
+  padding: 11px 20px;
+}
+.lg {
+  font-size: var(--fs-body);
+  padding: 14px 28px;
+}
+
+.primary {
+  background: var(--brand);
+  color: var(--text-on-brand);
+  border-color: var(--brand);
+}
+.primary:hover {
+  background: var(--green-600);
+  border-color: var(--green-600);
+  color: var(--text-on-brand);
+}
+
+.secondary {
+  background: transparent;
+  color: var(--graphite-800);
+  border-color: var(--border-strong);
+}
+.secondary:hover {
+  border-color: var(--graphite-800);
+  background: var(--graphite-25);
+  color: var(--graphite-900);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--text-brand);
+  border-color: transparent;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.ghost:hover {
+  color: var(--green-800);
+  background: var(--brand-soft);
+}
+
+.onDark {
+  background: var(--brand);
+  color: var(--graphite-900);
+  border-color: var(--brand);
+}
+.onDark:hover {
+  background: var(--green-400);
+  border-color: var(--green-400);
+  color: var(--graphite-900);
+}
+
+.secondaryOnDark {
+  background: transparent;
+  color: #fff;
+  border-color: var(--border-on-dark);
+}
+.secondaryOnDark:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #fff;
+}
+
+.onBrand {
+  background: var(--graphite-900);
+  color: #fff;
+  border-color: var(--graphite-900);
+}
+.onBrand:hover {
+  background: var(--graphite-800);
+  border-color: var(--graphite-800);
+  color: #fff;
+}
+
+.secondaryOnBrand {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.55);
+}
+.secondaryOnBrand:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #fff;
+  color: #fff;
+}
+
+.icon {
+  display: inline-flex;
+  transition: transform var(--dur-fast) var(--ease-standard);
+}
+.btn:hover .iconRight {
+  transform: translateX(2px);
+}
